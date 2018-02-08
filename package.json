@@ -1,0 +1,22 @@
+{
+  "name": "constructor-hangman",
+  "version": "1.0.0",
+  "description": "constructor-hangman ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjfernando/Constructor-Hangman.git"
+  },
+  "keywords": [
+    "[]"
+  ],
+  "author": "rome",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rjfernando/Constructor-Hangman/issues"
+  },
+  "homepage": "https://github.com/rjfernando/Constructor-Hangman#readme"
+}
