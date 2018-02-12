@@ -1,11 +1,11 @@
 var Letter = require('./letter.js');
 
-function Word (wordInput) {
-    this.word = wordInput;
+function Word (word) {
+    this.word = word;
     this.letters = [];
 }
 
-//creates the letterArray of Letter objects from the currentWord string
+//creates the letterArray of Letter objects from the word string
 Word.prototype.createArray = function(){
 	for (var i = 0; i < this.word.length; i++){
 		var currentLetter = new Letter(this.word[i], false);
@@ -27,21 +27,19 @@ Word.prototype.isSolved = function () {
     return solvedCheck;
 }
 
-//checks if a given letter is in the word
+//checks to see if the letter matches any letter in the word given
 Word.prototype.checkGuess = function (guessLetter) {
     var correctGuess = false;
     for (var i = 0; i < this.letters.length; i++) {
-        //if guessed letter is in word, set letter object to guessed
         if (this.letters[i].letter === guessLetter) {
             correctGuess = true;
             this.letters[i].guessedCorrectly = true;
         }
     }
-    //returns boolean whether letter was in word
     return correctGuess;
 }
 
-//method to console log the contents of the letterArray
+//console log the contents of the letterArray
 Word.prototype.printWord = function () {
     var wordToPrint = '';
     for (var i = 0; i < this.letters.length; i++) {
@@ -51,7 +49,7 @@ Word.prototype.printWord = function () {
     console.log('\n    ' + wordToPrint + '\n');
 }
 
-//method to console log the current word itself
+//console log the current word 
 Word.prototype.showWord = function () {
     var wordToPrint = '';
     for (var i = 0; i < this.letters.length; i++) {
