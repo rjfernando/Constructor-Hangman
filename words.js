@@ -1,14 +1,14 @@
 var Letter = require('./letter.js');
 
-function Word (wordInput, letters) {
-    this.currentWord = wordInput;
+function Word (word, letters) {
+    this.word = word;
     this.letters = [];
 }
 
 //creates the letterArray of Letter objects from the word string
 Word.prototype.createArray = function(){
-	for (var i = 0; i < this.currentWord.length; i++){
-		var currentLetter = new Letter(this.currentWord[i], false);
+	for (var i = 0; i < this.word.length; i++){
+		var currentLetter = new Letter(this.word[i], false);
 		if (currentLetter.letter === ' '){
 			currentLetter.guessedCorrectly = true;
         }
