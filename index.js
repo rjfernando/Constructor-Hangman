@@ -3,13 +3,12 @@ var inquirer = require('inquirer');
 var fs = require('fs');
 var prompt = require('prompt');
 
-// provides array to check user input for validation
 var alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
 var wordArray = [];
 var currentWord = null;
 var guessedLetters = [];
-var guessesRemaining = 10;
+var guessesRemaining = 7;
 
 //functin to read wordfile for the array of words and place wordArray to contents of file and splits
 function getWordArray() {
@@ -27,7 +26,7 @@ function displayNewWord() {
     var wordPick = wordArray[randomIndex];
     currentWord = new Word(wordPick);
     currentWord.createArray();
-    guessesRemaining = 9;
+    guessesRemaining = 7;
     guessedLetters = [];
     gameInPlay();
 }
@@ -47,13 +46,15 @@ function gameInPlay() {
         var currentGuess = response.letterGuess.toLowerCase();
         //checks to see if users input is a single letter
         if (alphabet.indexOf(currentGuess) === -1 || currentGuess.length !== 1) {
-            console.log("\nPlease guess a single letter!")
+            console.log("\nPlease type a single letter!");
             gameInPlay();
 
             return;
         }
         if (guessedLetters.indexOf(currentGuess) !== -1) {
-            console.log("\nYou've already guessed that letter!")
+            console.log("=======================================");
+            console.log("\nYou've already guessed that letter!");
+            console.log("=======================================");
             gameInPlay();
 
             return;
@@ -62,18 +63,22 @@ function gameInPlay() {
         guessedLetters.push(currentGuess);
         // check the guess using word method
         if (currentWord.checkGuess(currentGuess)) {
+            console.log("===========================");
             console.log('\nCorrect!');
+            console.log("===========================");
         } else {
-            console.log('\nIncorrect!')
+            console.log("===========================");
+            console.log('\nIncorrect,  Try again!');
+            console.log("===========================");
             guessesRemaining--;
         }
-        // If word completed, win
-        if (currentWord.isSolved()) {
-            endGame(true);
+        // if user solves word, user wins
+        if (currentWord.wordSolved()) {
+            restartGame(true);
         }
-        // If no more guesses, lose
+        // if guessRemaining is 0 user losses
         else if (guessesRemaining <= 0) {
-            endGame(false);
+            restartGame(false);
         } else {
             gameInPlay();
         }
@@ -81,21 +86,26 @@ function gameInPlay() {
 }
 
 //function to prompt for new game
-function endGame(won) {
+function restartGame(won) {
     if (won) {
-        console.log('\n*** You have won! ***')
+        console.log('\n**** FANTASTIC, YOU WIN! ****');
     } else {
-        console.log('\nYou have lost! The correct answer was:')
+        console.log('\nYou have lost! The correct answer was:');
     };
-    word.showWord();
-    //prompts for new game
+        currentWord.showWord();
+        
+        console.log("\n        TRY AGAIN NEXT TIME");
+        console.log("=======================================");
+    
+     //prompts for new game to begin
     inquirer.prompt([{
         type: "list",
         name: "newGame",
         message: "Would you like to play again?",
         choices: ["Yes", "No"]
     }]).then(function (response) {
-        //if yes, picks new word
+        
+        //if use selects yes begins new game and displays a new word to guess
         if (response.newGame === 'Yes') {
             displayNewWord();
         } else {
@@ -116,4 +126,4 @@ function showGuessed() {
 }
 
 //initializes wordlist and begins game
-displayNewWord();
+getWordArray();
