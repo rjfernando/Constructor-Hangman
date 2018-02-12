@@ -3,16 +3,16 @@
 
 function Letter(letter){
     this.currentLetter = letter;
-    this.guessedLetter = false;
+    this.showLetter = false;
 
-    this.showletter = function(){
+    this.renderLetter = function(){
         //puts a blank space if there is a space in the word that's being guessed
         if (this.currentLetter === " "){
-            this.guessedLetter = true
+            this.showLetter = true
             return " ";
         }
         //will show underline and letter if true
-        if (this.guessedLetter === false){
+        if (this.showLetter === false){
             return "_";
         } else {
             return this.currentLetter;
@@ -20,6 +20,6 @@ function Letter(letter){
         console.log("this.currentLetter");
     }
 };
- var testOne = new Letter("d");
+ 
 //export file to be used in Word.js
 module.exports = Letter;
