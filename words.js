@@ -1,49 +1,64 @@
-var require = require('./letter.js');
+var Letter = require('./letter.js');
 
-//word constructor 
-var Word = function (current) {
-    this.word = current;
+function Word (wordInput) {
+    this.word = wordInput;
     this.letters = [];
-    this.found = false;
-    // for loops to get letters from word and push to an empty array
-    this.getLetter = function (word) {
-        for (var i = 0; i < this.word.length; i++) {
-            this.letters.push(new Letter(this.word[i]));
-        }
-    }
-};
+}
 
-// if the word was found then the round is complete
-this.foundWord = function () {
-    var count = 0
+//creates the letterArray of Letter objects from the currentWord string
+Word.prototype.createArray = function(){
+	for (var i = 0; i < this.word.length; i++){
+		var currentLetter = new Letter(this.word[i], false);
+		if (currentLetter.letter === ' '){
+			currentLetter.guessedCorrectly = true;
+		}
+		this.letters.push(currentLetter);
+	}
+}
+
+//method to check if word is solved
+Word.prototype.isSolved = function () {
+    var solvedCheck = true;
     for (var i = 0; i < this.letters.length; i++) {
-        if (this.letters[i].currentLetter) {
-            count++
+        if (!this.letters[i].guessedCorrectly) {
+            solvedCheck = false;
         }
     }
-    if (count === this.letters.length) {
-        this.found = true;
-    }
-    return this.found;
-};
-// checking to see if the letters user inputed matches the letters in the word being solved.
-this.letterCheck = function (guessedLetter) {
-    var checked = 0;
+    return solvedCheck;
+}
+
+//checks if a given letter is in the word
+Word.prototype.checkGuess = function (guessLetter) {
+    var correctGuess = false;
     for (var i = 0; i < this.letters.length; i++) {
-        if (this.letters[i].currentLetter === guessedLetter) {
-            this.letters[i].showLetter = true;
-            checked++;
+        //if guessed letter is in word, set letter object to guessed
+        if (this.letters[i].letter === guessLetter) {
+            correctGuess = true;
+            this.letters[i].guessedCorrectly = true;
         }
     }
-    return checked;
-};
-// renders the words
-this.displayWord = function () {
-    var wordString = "";
+    //returns boolean whether letter was in word
+    return correctGuess;
+}
+
+//method to console log the contents of the letterArray
+Word.prototype.printWord = function () {
+    var wordToPrint = '';
     for (var i = 0; i < this.letters.length; i++) {
-        wordString += this.letters[i].showLetters();
+        wordToPrint += this.letters[i].display().toUpperCase();
+        wordToPrint += ' ';
     }
-    return wordString;
-};
+    console.log('\n    ' + wordToPrint + '\n');
+}
+
+//method to console log the current word itself
+Word.prototype.showWord = function () {
+    var wordToPrint = '';
+    for (var i = 0; i < this.letters.length; i++) {
+        wordToPrint += this.letters[i].letter.toUpperCase();
+        wordToPrint += ' ';
+    }
+    console.log('\n    ' + wordToPrint + '\n');
+}
 
 module.exports = Word;
