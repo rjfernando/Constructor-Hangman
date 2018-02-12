@@ -2,14 +2,10 @@
 // a boolean value that stores letters guessed & a function that returns characters if letter is guessed.
 
 function Letter(letter, guessedCorrectly ) {
-	
-	//stores the actual letter as a string
 	this.letter = letter;
-	//boolean if guessed
 	this.guessedCorrectly = guessedCorrectly;
 
 }
-
 //displays either a letter or "_" when user selects
 Letter.prototype.display = function() {
 	if( this.guessedCorrectly ){

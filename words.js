@@ -1,23 +1,24 @@
 var Letter = require('./letter.js');
 
-function Word (word) {
-    this.word = word;
+function Word (wordInput, letters) {
+    this.currentWord = wordInput;
     this.letters = [];
 }
 
 //creates the letterArray of Letter objects from the word string
 Word.prototype.createArray = function(){
-	for (var i = 0; i < this.word.length; i++){
-		var currentLetter = new Letter(this.word[i], false);
+	for (var i = 0; i < this.currentWord.length; i++){
+		var currentLetter = new Letter(this.currentWord[i], false);
 		if (currentLetter.letter === ' '){
 			currentLetter.guessedCorrectly = true;
-		}
-		this.letters.push(currentLetter);
+        }
+        this.letters.push(currentLetter);
+    
 	}
 }
 
 //method to check if word is solved
-Word.prototype.isSolved = function () {
+Word.prototype.wordSolved = function () {
     var solvedCheck = true;
     for (var i = 0; i < this.letters.length; i++) {
         if (!this.letters[i].guessedCorrectly) {
